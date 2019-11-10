@@ -13,12 +13,13 @@
 
 	const handleSubmit = () => {
 		socket.emit("Message", message);
+		messages = messages.concat(message);
 		console.log(messages)
 		message = ""
 	}
 
 	socket.on("Message", (message) => {
-		messages = messages.concat(message)
+		messages = messages.concat(message)	
 	})
 </script>
 

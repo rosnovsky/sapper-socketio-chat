@@ -1,19 +1,23 @@
-describe('Sapper template app', () => {
+describe('Sapper chat app', () => {
 	beforeEach(() => {
 		cy.visit('/')
 	});
 
 	it('has the correct <h1>', () => {
-		cy.contains('h1', 'Great success!')
+		cy.contains('h1', 'Chat App')
 	});
 
-	it('navigates to /about', () => {
-		cy.get('nav a').contains('about').click();
-		cy.url().should('include', '/about');
+	it('has chat input field with placeholder', () => {
+		cy.get('input').invoke('attr', 'placeholder').should('contain', 'Test')
+	})
+
+	it('Has "Send" button', () => {
+		cy.get('button').contains('Send')
 	});
 
-	it('navigates to /blog', () => {
-		cy.get('nav a').contains('blog').click();
-		cy.url().should('include', '/blog');
-	});
+	it('Posts chat message to the page', () => {
+		cy.get('input').type('Let\'s post this test message')
+		.then(()=> cy.get('button').contains('Send').click())
+		.then(() => cy.get('li').contains('Let\'s post this test message'))	
+	})
 });
